@@ -1,3 +1,22 @@
+/**
+ * 参考URLリスト
+ * 
+ * mod-jdbc-persitorのマニュアル
+ * https://github.com/timyates/mod-jdbc-persistor
+ * 
+ * Sugarjsのマニュアル
+ * http://sugarjs.com/api
+ * 
+ * Googleグループ
+ * https://groups.google.com/forum/#!forum/vertx
+ * 
+ * Vert.xがいいね
+ * http://acro-engineer.hatenablog.com/entry/2013/08/10/131203
+ * 
+ * Vert.x API
+ * http://vertx.io/api/javascript/container.html
+ */
+
 load('lib/sugar/sugar-full.min.js');
 
 var vertx = require('vertx');
@@ -55,11 +74,29 @@ router.get('/close', function(req) {
 
 // wiki
 var wikiHandler = require('lib/module/wiki.js');
-router.all('/wiki', wikiHandler);
+router.allWithRegEx('/wiki(/([0-9]+/?)?)?', wikiHandler);
 
 // tag
 var tagHandler = require('lib/module/tag.js');
 router.all('/tag', tagHandler);
+
+//// hoge
+//router.all('/hoge', function(req)
+//{
+//    eb.send('mysql', {
+//        action:'select',
+//        stmt:'show variables like "%timeout%"'
+//    }, function(reply)
+//    {
+//        req.response.chunked(true);
+//        reply.result.each(function(e)
+//        {
+//            req.response.write(JSON.stringify(e));
+//        });
+//        
+//        req.response.end();
+//    });
+//});
 
 ///////////////////////////////////////////////////
 // mysql接続モジュール起動

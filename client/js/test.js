@@ -22,6 +22,26 @@ $(function(){
         "top" : $(".content").position().top + 10,
         "left" : $(".content").width() / 2
     }).draggable();
+    
+    /////////////////////////////////////////////
+    // Wikiリストの表示
+    /////////////////////////////////////////////
+    $.getJSON('http://localhost:8080/wiki/', function(data)
+    {
+        list = $("#wikilist").empty();
+        $.each(data, function(i, v)
+        {
+            list.append($("<li>").attr("wiki_id", v.id).text(v.title).click(function()
+            {
+                $.getJSON('http://localhost:8080/wiki/' + v.id + '/', function(wikiContent)
+                {
+                    $("#source").hide();
+                    $("#preview").hide();
+                    $("#screen").show().html(marked.parse(wikiContent.content));
+                });
+            }));
+        });
+    });
 
     /////////////////////////////////////////////
     // Markdown入力域のイベント設定

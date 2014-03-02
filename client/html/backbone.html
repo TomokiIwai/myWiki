@@ -9,12 +9,41 @@ and open the template in the editor.
         <title>Backbone Example</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
-        <script src="../js/jquery/jquery-min.js"></script>
+    </head>
+    <body>
+        <h1>Backbone Todo</h1>
+        <div id="main">
+          <div id="task-list">
+            <!-- ここにタスクリストを表示する -->
+          </div>
+          <input id="name-input" type="text"/>
+          <input id="add-input" type="button" value="add"/>
+        </div>
+
+        <!--TaskView の描画に使うテンプレート-->
+        <script id="task-template" type="text/html">
+          <% if (isEditing) { %>
+            <input class="name-input" type="text" value="<%= name %>"/>
+            <input class="save-input" type="button" value="save"/>
+            <input class="cancel-input" type="button" value="cancel"/>
+            <input class="delete-input" type="button" value="delete"/>
+            <% } else { %>
+            <% if (completed) { %>
+              <input type="checkbox" checked>
+              <del><%= name %></del>
+              <% } else { %>
+              <input type="checkbox">
+              <%= name %>
+              <% } %>
+            </input>
+            <a class="edit-link" href="javascript:void(0);">[edit]</a>
+            <% } %>
+        </script>
+        
+        <script src="../js/zepto/zepto.js"></script>
         <script src="../js/json2/json2.js"></script>
         <script src="../js/underscore.js/underscore.js"></script>
         <script src="../js/backbone.js/backbone.js"></script>
-        <script src="../js/backbone_test.js"></script>
-    </head>
-    <body>
+        <script src="../ts/backbone_test.js"></script>
     </body>
 </html>

@@ -5,8 +5,56 @@ var eb = vertx.eventBus;
 exports =
 {
     /**
+     * 1件を取得する。
+     * @param {integer} id
+     * @param {function} callback
+     * @returns {undefined}
+     */
+    select : function(id, callback)
+    {
+        params = {
+            action : 'select',
+            stmt   : 'SELECT id, title, content FROM wiki WHERE id = ?',
+            values : [[id]]
+        };
+        
+        eb.send('mysql', params, function(reply)
+        {
+            if (!reply || reply.status !== 'ok')
+            {
+                callback(null);
+                return;
+            }
+            
+            callback(reply.result);
+        });
+    },
+    /**
+     * 全件を取得する。
+     * @param {function} callback
+     * @returns {undefined}
+     */
+    selectAll : function(callback)
+    {
+        params = {
+            action : 'select',
+            stmt   : 'SELECT id, title, content FROM wiki ORDER BY id'
+        };
+        
+        eb.send('mysql', params, function(reply)
+        {
+            if (!reply || reply.status !== 'ok')
+            {
+                callback(null);
+                return;
+            }
+            
+            callback(reply.result);
+        });
+    },
+    /**
      * 最新の1件を取得する。
-     * @param {type} callback
+     * @param {function} callback
      * @returns {undefined}
      */
     selectLatest : function(callback)
@@ -29,9 +77,9 @@ exports =
     },
     /**
      * レコードを登録する。
-     * @param {type} title
-     * @param {type} content
-     * @param {type} callback
+     * @param {string} title
+     * @param {string} content
+     * @param {function} callback
      * @returns {undefined}
      */
     insert : function(title, content, callback)

@@ -22,9 +22,20 @@ var console = require('vertx/console');
  */
 function execute(req)
 {
+    // TODO 削除 for debug code
+    req.response.putHeader('Access-Control-Allow-Origin','*');
+
     if (req.method() === 'GET')
     {
-        return get(req);
+        m = req.path().match(/^\/wiki\/([0-9]+)\/?$/);
+        if (m)
+        {
+            return getOne(req, m[1]);
+        }
+        else
+        {
+            return getList(req);
+        }
     }
     else if (req.method() === 'POST')
     {
@@ -35,24 +46,37 @@ function execute(req)
 }
 
 /**
- * GETリクエストハンドラー
+ * 単一wikiのGETリクエストハンドラー
+ * @param {HttpServerRequest} req
+ * @param {integer} id
+ * @returns {undefined}
+ */
+function getOne(req, id)
+{
+    wikiDao.select(id, function(result)
+    {
+        req.response.putHeader('Content-Type', 'application/json; charset=utf-8');
+        
+        res = result ? result[0] : {};
+        
+        req.response.end(JSON.stringify(res));
+    });
+}
+
+/**
+ * wikiリストのGETリクエストハンドラー
  * @param {type} req
  * @returns {undefined}
  */
-function get(req)
+function getList(req)
 {
-    wikiDao.selectLatest(function(result)
+    wikiDao.selectAll(function(result)
     {
-        req.response.putHeader('Content-Type', 'text/html; charset=utf-8');
+        req.response.putHeader('Content-Type', 'application/json; charset=utf-8');
         
-        req.response.chunked(true);
-
-        for each(row in result)
-        {
-            req.response.write(row.id + " : " + row.title + " : " + row.content);
-        }
-            
-        req.response.end();
+        res = result ? result : [];
+        
+        req.response.end(JSON.stringify(res));
     });
 }
 
@@ -72,14 +96,16 @@ function post(req)
         }
         
         // パラメータ取得
-        params = req.formAttributes();
-        
-        title = params.get('title');
-        content = params.get('content');
-        tags = params.getAll('tag');
-        
-//        console.log(params.names().join(','));
+//        params = req.formAttributes();
+//        title = params.get('title');
+//        content = params.get('content');
+//        tags = params.getAll('tag');
 
+        params = httputil.unpackParam(data.getString(0, data.length()));
+        title = params['title'];
+        content = params['content'];
+        tags = params['tag'];
+        
         // バリデーション
         if (!title || !content)
         {
@@ -87,7 +113,7 @@ function post(req)
             httputil.badRequest(req.response);
             return;
         }
-
+        
         wikiDao.insert(title, content, function(wikiResult)
         {
             if (!wikiResult)

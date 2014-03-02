@@ -1,3 +1,5 @@
+//var console = require('vertx/console');
+
 exports =
 {
     /**
@@ -15,7 +17,7 @@ exports =
     {
         res.statusCode(404);
         res.end('Not Found.');
-    }
+    },
     
 //    packParam : function(map)
 //    {
@@ -33,32 +35,32 @@ exports =
 //        
 //        return result.join('&');
 //    },
-//    unpackParam : function(str)
-//    {
-//        if (!str) { return null; }
-//        
-//        try
-//        {
-//            elements = str.split('&');
-//
-//            result = {};
-//
-//            for each(element in elements)
-//            {
-//                tmp = element.split('=');
-//                k = tmp[0];
-//                v = tmp[1];
-//
-//                result[k] = decodeURIComponent(v);
-//            }
-//
-//            return result;
-//        }
-//        catch (e)
-//        {
-//            return null;
-//        }
-//    }
+    unpackParam : function(str)
+    {
+        if (!str) { return null; }
+        
+        try
+        {
+            elements = str.split('&');
+
+            result = {};
+
+            for each(element in elements)
+            {
+                tmp = element.split('=');
+                k = tmp[0];
+                v = tmp[1];
+
+                result[k] = decodeURIComponent(v.replace(/\+/g, " "));
+            }
+
+            return result;
+        }
+        catch (e)
+        {
+            return null;
+        }
+    }
 };
 
 module.exports = exports;
