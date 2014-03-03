@@ -22,7 +22,7 @@ var TMPLS = (function () {
 /// <reference path="typings/backbone/backbone.d.ts"/>
 /// <reference path="typings/underscore/underscore.d.ts"/>
 /// <reference path="typings/jquery/jquery.d.ts"/>
-/// <reference path="templates.ts" />
+/// <reference path="template.ts" />
 var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -32,7 +32,7 @@ var __extends = this.__extends || function (d, b) {
 /**
 * コンパイルコマンド
 *
-* tsc backbone_test.ts templates.ts --out backbone_test.js
+* tsc backbone_test.ts template.ts --out backbone_test.js
 */
 /**
 * Taskモデルクラス

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../js/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet/less" type="text/css" href="../css/test.less" />
+</head>
+<body id="body">
+    <!-- ヘッダー -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <p class="navbar-text">myWiki</p>
+        <p class="navbar-text navbar-right">Powered with ｊQuery, underscore, backbone.js, Typescript, less, marked, bootstrap</p>
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Link</a></li>
+                <li><a href="#">Link</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- フッター -->
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
+        <p class="navbar-text">copyright(c) tomoki.iwai</p>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- サイドメニュー -->
+            <div class="col-md-3">
+                <ul class="nav nav-ills" id="wikilist">
+                    <li><a href="#">ページ1</a></li>
+                    <li><a href="#">ページ1</a></li>
+                    <li><a href="#">ページ1</a></li>
+                    <li><a href="#">ページ1</a></li>
+                </ul>
+            </div>
+
+            <!-- メインコンテンツ -->
+            <div class="col-md-9">
+                <div id="content">
+                    <canvas id="mycanvas" width="300" height="300"></canvas>
+                </div>
+                <div id="tags" style="display:none">
+                    <ul>
+                        <li><a href="#">a</a></li>
+                        <li><a href="#">b</a></li>
+                        <li><a href="#">c</a></li>
+                        <li><a href="#">d</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/less.js/less.min.js" type="text/javascript"></script>
+    <script src="../js/jquery/jquery.min.js"></script>
+    <script src="../js/json2/json2.js"></script>
+    <script src="../js/underscore.js/underscore.js"></script>
+    <script src="../js/backbone.js/backbone.js"></script>
+    <script src="../js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/highlight.js/highlight.min.js" type="text/javascript"></script>
+    <script src="../js/marked/marked.js"></script>
+    <script src="../js/tagcanvas/jquery.tagcanvas.min.js"></script>
+    <script src="../ts/mywiki.js"></script>
+    <script>
+        $(function(){
+            $("#mycanvas").tagcanvas([], 'tags');
+        });
+    </script>
+</body>
+</html>

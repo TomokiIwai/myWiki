@@ -6,7 +6,7 @@
 /**
  * コンパイルコマンド
  *
- * tsc backbone_test.ts templates.ts --out backbone_test.js
+ * tsc backbone_test.ts template.ts --out backbone_test.js
  */
 
 /**
